@@ -1,8 +1,7 @@
 export default function componentStyleOverrides(theme, borderRadius, outlinedFilled) {
-    const mode = theme.palette.mode;
     const bgColor = theme.palette.grey[50];
-    const menuSelectedBack = theme.palette.secondary.light;
-    const menuSelected = theme.palette.secondary.dark;
+    const menuSelectedBack = theme.palette.secondary[100];
+    const menuSelected = theme.palette.secondary[90];
 
     return {
         MuiButton: {
@@ -64,7 +63,7 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
         MuiListItemButton: {
             styleOverrides: {
                 root: {
-                    color: theme.palette.grey[500],
+                    color: theme.palette.text.primary,
                     paddingTop: '10px',
                     paddingBottom: '10px',
                     '&.Mui-selected': {
@@ -107,16 +106,8 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
                 input: {
                     color: theme.palette.text.dark,
                     '&::placeholder': {
-                        color: theme.palette.secondary.main,
+                        color: theme.palette.text.secondary,
                         fontSize: '0.875rem'
-                    },
-                    '&.Mui-disabled': {
-                        background: theme.palette.primary.light
-                    }
-                },
-                root: {
-                    '&.Mui-disabled': {
-                        background: theme.palette.primary.light
                     }
                 }
             }
@@ -134,14 +125,6 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
                     },
                     '&.MuiInputBase-multiline': {
                         padding: 1
-                    },
-                    '&.Mui-disabled': {
-                        background: theme.palette.primary.light
-                    },
-                    input: {
-                        '&:-webkit-autofill': {
-                            transition: `background-color 10000s ease-in-out 0s`
-                        }
                     }
                 },
                 input: {
@@ -209,6 +192,7 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
         MuiSelect: {
             styleOverrides: {
                 select: {
+                    color: theme.palette.primary[100],
                     '&:focus': {
                         backgroundColor: 'transparent'
                     }
@@ -229,7 +213,7 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
         MuiAvatar: {
             styleOverrides: {
                 root: {
-                    color: theme.palette.primary.dark,
+                    color: theme.palette.primary[100],
                     background: theme.palette.primary[200]
                 }
             }
@@ -271,16 +255,16 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
                 tabs: {
                     backgroundColor: theme.palette.primary.light,
                     '& .MuiTabs-flexContainer': {
-                        borderColor: theme.palette.primary[200]
+                        borderColor: theme.palette.primary[40]
                     },
                     '& .MuiTab-root': {
                         color: theme.palette.grey[900]
                     },
                     '& .MuiTabs-indicator': {
-                        backgroundColor: theme.palette.primary.dark
+                        backgroundColor: theme.palette.primary[100]
                     },
                     '& .Mui-selected': {
-                        color: theme.palette.primary.dark
+                        color: theme.palette.primary[100]
                     }
                 }
             }
@@ -293,18 +277,16 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
                 }
             }
         },
-        MuiDialog: {
-            styleOverrides: {
-                paper: {
-                    padding: '12px 0 12px 0'
-                }
-            }
-        },
+        // MuiDialog: {
+        //     styleOverrides: {
+        //         paper: {
+        //             padding: '12px 0 12px 0'
+        //         }
+        //     }
+        // },
         MuiTableCell: {
             styleOverrides: {
                 root: {
-                    fontSize: '0.8rem',
-                    fontWeight: 500,
                     borderColor: theme.palette.grey[200],
                     '&.MuiTableCell-head': {
                         fontSize: '0.875rem',
@@ -325,7 +307,17 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
         MuiDialogTitle: {
             styleOverrides: {
                 root: {
-                    fontSize: '1.25rem'
+                    fontSize: '1.25rem',
+                    backgroundColor: theme.palette.primary[80],
+                    color: theme.palette.background.paper,
+                    marginBottom: '1rem'
+                }
+            }
+        },
+        MuiDialogActions: {
+            styleOverrides: {
+                root: {
+                    padding: '1rem'
                 }
             }
         }
