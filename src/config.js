@@ -9,14 +9,14 @@ export const DASHBOARD_SUPER_ADMIN_PATH = '/super-admin/dashboard';
 export const HORIZONTAL_MAX_ITEM = 6;
 
 const config = {
-    layout: LAYOUT_CONST.VERTICAL_LAYOUT, // vertical, horizontal
-    drawerType: LAYOUT_CONST.DEFAULT_DRAWER, // default, mini-drawer
+    layout: LAYOUT_CONST.VERTICAL_LAYOUT,
+    drawerType: LAYOUT_CONST.DEFAULT_DRAWER,
     fontFamily: `'Poppins', sans-serif`,
     borderRadius: 8,
     outlinedFilled: true,
-    navType: 'light', // light, dark
-    presetColor: 'default', // default, theme1, theme2, theme3, theme4, theme5, theme6
-    locale: 'en', // 'en' - English, 'fr' - French, 'ro' - Romanian, 'zh' - Chinese
+    navType: 'light',
+    presetColor: 'default',
+    locale: 'en',
     rtlLayout: false,
     container: false
 };
