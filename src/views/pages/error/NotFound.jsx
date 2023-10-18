@@ -9,7 +9,7 @@ import { IconHome } from '@tabler/icons-react';
 import AnimateButton from '@/ui-component/extended/AnimateButton';
 
 // assets
-import IcErrorPageNotFound from '@/assets/images/icon/error/ic_error_page_not_found.png';
+import IcErrorPageNotFound from '@/assets/images/error/ic_error_page_not_found.png';
 
 const NotFound = () => (
     <Grid container>

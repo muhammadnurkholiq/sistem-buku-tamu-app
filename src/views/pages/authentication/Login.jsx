@@ -7,8 +7,8 @@ import MainCard from '@/ui-component/cards/MainCard';
 import LoginForm from './forms/LoginForm';
 
 // assets
-import IcLoginBg from '@/assets/images/icon/ic_login_bg.jpg';
-import IcLogin from '@/assets/images/icon/ic_login.png';
+import IcLoginBg from '@/assets/images/page/ic_login_bg.jpg';
+import IcLogin from '@/assets/images/page/ic_login.png';
 
 const Login = () => {
     const theme = useTheme();

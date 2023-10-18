@@ -9,7 +9,7 @@ import { IconHome } from '@tabler/icons-react';
 import AnimateButton from '@/ui-component/extended/AnimateButton';
 
 // assets
-import IcErrorAccessDenied from '@/assets/images/icon/error/ic_error_access_denied.png';
+import IcErrorAccessDenied from '@/assets/images/error/ic_error_access_denied.png';
 
 const Forbidden = () => (
     <Grid container>
