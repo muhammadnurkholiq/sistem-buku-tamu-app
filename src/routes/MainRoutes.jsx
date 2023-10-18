@@ -8,8 +8,8 @@ import MainLayout from '@/layout/MainLayout';
 import Loadable from '@/ui-component/Loadable';
 
 // admin routing
-const AdminDashboard = Loadable(lazy(() => import('@/views/main/admin/Dashboard')));
-const AdminUserManagement = Loadable(lazy(() => import('@/views/main/admin/UserManagement')));
+const AdminDashboard = Loadable(lazy(() => import('@/views/main/admin/dashboard')));
+const AdminUserManagement = Loadable(lazy(() => import('@/views/main/admin/userManagement')));
 
 // staff routing
 const StaffDashboard = Loadable(lazy(() => import('@/views/main/staff/dashboard')));
