@@ -1,7 +1,7 @@
 export default function componentStyleOverrides(theme, borderRadius, outlinedFilled) {
-    const bgColor = theme.palette.grey[50];
-    const menuSelectedBack = theme.palette.secondary[100];
-    const menuSelected = theme.palette.secondary[90];
+    const bgColor = theme.palette.primary[100];
+    const menuSelectedBack = theme.palette.primary[90];
+    const menuSelected = theme.palette.secondary.main;
 
     return {
         MuiButton: {
@@ -63,16 +63,23 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
         MuiListItemButton: {
             styleOverrides: {
                 root: {
-                    color: theme.palette.text.primary,
+                    color: menuSelected,
                     paddingTop: '10px',
                     paddingBottom: '10px',
                     '&.Mui-selected': {
                         color: menuSelected,
                         backgroundColor: menuSelectedBack,
                         '&:hover': {
-                            backgroundColor: menuSelectedBack
+                            backgroundColor: menuSelectedBack,
+                            color: menuSelected,
+                            '& .MuiListItemText-root': {
+                                color: menuSelected
+                            }
                         },
                         '& .MuiListItemIcon-root': {
+                            color: menuSelected
+                        },
+                        '& .MuiListItemText-root': {
                             color: menuSelected
                         }
                     },
@@ -80,6 +87,9 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
                         backgroundColor: menuSelectedBack,
                         color: menuSelected,
                         '& .MuiListItemIcon-root': {
+                            color: menuSelected
+                        },
+                        '& .MuiListItemText-root': {
                             color: menuSelected
                         }
                     }
@@ -90,14 +100,26 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
             styleOverrides: {
                 root: {
                     color: theme.palette.text.primary,
-                    minWidth: '36px'
+                    minWidth: '36px',
+                    '&:hover': {
+                        color: menuSelected
+                    }
                 }
             }
         },
         MuiListItemText: {
             styleOverrides: {
+                root: {
+                    color: theme.palette.text.primary,
+                    '&:hover': {
+                        color: menuSelected
+                    }
+                },
                 primary: {
-                    color: theme.palette.text.dark
+                    color: theme.palette.text.primary,
+                    '&:hover': {
+                        color: menuSelected
+                    }
                 }
             }
         },
@@ -115,13 +137,13 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
         MuiOutlinedInput: {
             styleOverrides: {
                 root: {
-                    background: outlinedFilled ? bgColor : 'transparent',
+                    background: 'transparent',
                     borderRadius: `${borderRadius}px`,
                     '& .MuiOutlinedInput-notchedOutline': {
                         borderColor: theme.palette.grey[400]
                     },
                     '&:hover $notchedOutline': {
-                        borderColor: theme.palette.primary.light
+                        borderColor: theme.palette.background.default
                     },
                     '&.MuiInputBase-multiline': {
                         padding: 1
@@ -129,7 +151,7 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
                 },
                 input: {
                     fontWeight: 500,
-                    background: outlinedFilled ? bgColor : 'transparent',
+                    background: 'transparent',
                     padding: '15.5px 14px',
                     borderRadius: `${borderRadius}px`,
                     '&.MuiInputBase-inputSizeSmall': {
@@ -159,7 +181,7 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
                     width: '4px'
                 },
                 valueLabel: {
-                    color: theme.palette.primary.light
+                    color: theme.palette.background.default
                 }
             }
         },
@@ -253,7 +275,7 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
         MuiInternalDateTimePickerTabs: {
             styleOverrides: {
                 tabs: {
-                    backgroundColor: theme.palette.primary.light,
+                    backgroundColor: theme.palette.background.default,
                     '& .MuiTabs-flexContainer': {
                         borderColor: theme.palette.primary[40]
                     },
@@ -308,7 +330,7 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
             styleOverrides: {
                 root: {
                     fontSize: '1.25rem',
-                    backgroundColor: theme.palette.primary[80],
+                    backgroundColor: theme.palette.primary.main,
                     color: theme.palette.background.paper,
                     marginBottom: '1rem'
                 }

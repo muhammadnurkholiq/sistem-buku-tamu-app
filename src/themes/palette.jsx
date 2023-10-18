@@ -78,7 +78,8 @@ const Palette = (navType) => {
                 900: colors.darkPaper
             },
             text: {
-                primary: colors.primary80,
+                primary: colors.primaryMain,
+                light: colors.secondaryMain,
                 secondary: colors.secondary60,
                 dark: colors.primary100,
                 hint: colors.grey100

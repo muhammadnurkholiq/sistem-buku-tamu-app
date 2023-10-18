@@ -80,6 +80,14 @@ const LoginForm = ({ ...others }) => {
                                     onChange={handleChange}
                                     disabled={loadingLogin}
                                     fullWidth
+                                    sx={{
+                                        '& .MuiInputBase-input.Mui-disabled': {
+                                            WebkitTextFillColor: '#000000'
+                                        },
+                                        '& :-webkit-autofill': {
+                                            transitionDelay: '9999s'
+                                        }
+                                    }}
                                 />
                                 {touched.email && errors.email && (
                                     <FormHelperText error id="standard-weight-helper-text-email-login">
@@ -111,6 +119,14 @@ const LoginForm = ({ ...others }) => {
                                                 </IconButton>
                                             </InputAdornment>
                                         )
+                                    }}
+                                    sx={{
+                                        '& .MuiInputBase-input.Mui-disabled': {
+                                            WebkitTextFillColor: '#000000'
+                                        },
+                                        '& :-webkit-autofill': {
+                                            transitionDelay: '9999s'
+                                        }
                                     }}
                                 />
                                 {touched.password && errors.password && (

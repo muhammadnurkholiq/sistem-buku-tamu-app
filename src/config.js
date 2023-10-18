@@ -4,7 +4,7 @@ import LAYOUT_CONST from '@/constant';
 export const BASE_PATH = '';
 
 export const DASHBOARD_ADMIN_PATH = '/admin/dashboard';
-export const DASHBOARD_SUPER_ADMIN_PATH = '/super-admin/dashboard';
+export const DASHBOARD_STAFF_PATH = '/staff/dashboard';
 
 export const HORIZONTAL_MAX_ITEM = 6;
 

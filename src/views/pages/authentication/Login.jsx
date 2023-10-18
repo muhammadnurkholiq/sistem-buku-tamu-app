@@ -31,7 +31,7 @@ const Login = () => {
                         <Grid item xs={0} md={6.5} sx={{ height: '100%' }}>
                             <Stack sx={{ height: '100%' }} direction="column" alignItems="center" justifyContent="center" gap={3}>
                                 <Box component="img" src={IcLogin} sx={{ width: '50%' }} />
-                                <Typography variant="h3" sx={{ color: theme.palette.primary[80] }}>
+                                <Typography variant="h3" sx={{ color: theme.palette.primary.main }}>
                                     Maheswara Solusi Teknologi
                                 </Typography>
                             </Stack>
@@ -39,11 +39,11 @@ const Login = () => {
                         <Grid item xs={12} md={5.5}>
                             <Stack sx={{ height: '100%' }} direction="column" justifyContent="center" gap={3}>
                                 <Stack gap={1}>
-                                    <Typography variant="h1" textAlign="center" sx={{ color: theme.palette.primary[80] }}>
-                                        Welcome!
+                                    <Typography variant="h2" textAlign="center" sx={{ color: theme.palette.primary.main }}>
+                                        Selamat Datang!
                                     </Typography>
-                                    <Typography variant="h1" textAlign="center" sx={{ fontWeight: 200, color: theme.palette.primary[80] }}>
-                                        Sign in to your Account
+                                    <Typography variant="h1" textAlign="center" sx={{ fontWeight: 200, color: theme.palette.primary.main }}>
+                                        Sistem Buku Tamu
                                     </Typography>
                                 </Stack>
                                 <LoginForm />
