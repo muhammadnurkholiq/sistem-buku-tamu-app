@@ -93,8 +93,6 @@ const ProfileSection = () => {
         prevOpen.current = open;
     }, [open]);
 
-    console.log(user?.full_name);
-
     return (
         <>
             <ButtonBase sx={{ p: 1, borderRadius: 50 }} onClick={handleToggle}>
