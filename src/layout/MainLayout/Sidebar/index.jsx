@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Box, Drawer, Stack, Typography, useMediaQuery, Avatar } from '@mui/material';
+import { Box, Drawer, Stack, Typography, useMediaQuery, Avatar, Divider } from '@mui/material';
 
 // third-party
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -44,7 +44,7 @@ const Sidebar = () => {
     );
 
     const drawerContent = (
-        <Stack gap={4}>
+        <Stack gap={3}>
             {/* profile */}
             <Stack alignItems="center" justifyContent="center" gap={1}>
                 <Stack direction="row" justifyContent="center" sx={{ mb: 2 }}>
@@ -61,26 +61,24 @@ const Sidebar = () => {
                     </>
                 )}
             </Stack>
-            <Stack>
-                {/* menu */}
-                <MenuList />
-                {/* footer */}
-                {layout === LAYOUT_CONST.VERTICAL_LAYOUT && drawerOpen && (
-                    <Stack
-                        direction="row"
-                        justifyContent="center"
-                        sx={{ mb: 2, position: 'absolute', bottom: 20, left: 0, right: 0, margin: 'auto' }}
-                    >
-                        <Chip
-                            label={`SBT ${import.meta.env.VITE_VERSION}`}
-                            disabled
-                            chipcolor="secondary"
-                            size="small"
-                            sx={{ cursor: 'pointer' }}
-                        />
-                    </Stack>
-                )}
-            </Stack>
+            {/* menu */}
+            <MenuList />
+            {/* footer */}
+            {layout === LAYOUT_CONST.VERTICAL_LAYOUT && drawerOpen && (
+                <Stack
+                    direction="row"
+                    justifyContent="center"
+                    sx={{ mb: 2, position: 'absolute', bottom: 20, left: 0, right: 0, margin: 'auto' }}
+                >
+                    <Chip
+                        label={`SBT ${import.meta.env.VITE_VERSION}`}
+                        disabled
+                        chipcolor="secondary"
+                        size="small"
+                        sx={{ cursor: 'pointer' }}
+                    />
+                </Stack>
+            )}
         </Stack>
     );
 
