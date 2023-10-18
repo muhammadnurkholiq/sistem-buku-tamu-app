@@ -16,22 +16,33 @@ const Palette = (navType) => {
                 black: colors.darkPaper
             },
             primary: {
-                light: colors.primaryLight,
                 main: colors.primaryMain,
-                dark: colors.primaryDark,
-                200: colors.primary200,
-                800: colors.primary800
+                10: colors.primary10,
+                20: colors.primary20,
+                30: colors.primary30,
+                40: colors.primary40,
+                50: colors.primary50,
+                60: colors.primary60,
+                70: colors.primary70,
+                80: colors.primary80,
+                90: colors.primary90,
+                100: colors.primary100
             },
             secondary: {
-                light: colors.secondaryLight,
                 main: colors.secondaryMain,
-                dark: colors.secondaryDark,
-                200: colors.secondary200,
-                800: colors.secondary800
+                10: colors.secondary10,
+                20: colors.secondary20,
+                30: colors.secondary30,
+                40: colors.secondary40,
+                50: colors.secondary50,
+                60: colors.secondary60,
+                70: colors.secondary70,
+                80: colors.secondary80,
+                90: colors.secondary90,
+                100: colors.secondary100
             },
             error: {
                 light: colors.errorLight,
-                200: colors.error200,
                 main: colors.errorMain,
                 dark: colors.errorDark
             },
@@ -40,21 +51,8 @@ const Palette = (navType) => {
                 main: colors.orangeMain,
                 dark: colors.orangeDark
             },
-            blue: {
-                light: colors.blueLight,
-                main: colors.blueMain
-            },
-            purple: {
-                light: colors.purpleLight,
-                main: colors.purpleMain
-            },
-            green: {
-                light: colors.greenLight,
-                main: colors.greenMain
-            },
             warning: {
                 light: colors.warningLight,
-                200: colors.warning200,
                 main: colors.warningMain,
                 dark: colors.warningDark
             },
@@ -80,16 +78,16 @@ const Palette = (navType) => {
                 900: colors.darkPaper
             },
             text: {
-                primary: colors.grey700,
-                secondary: colors.grey500,
-                dark: colors.grey900,
-                hint: colors.grey100,
-                light: colors.paper
+                primary: colors.primaryMain,
+                light: colors.secondaryMain,
+                secondary: colors.secondary60,
+                dark: colors.primary100,
+                hint: colors.grey100
             },
-            divider: colors.primary200,
+            divider: colors.grey200,
             background: {
                 paper: colors.paper,
-                default: colors.paper
+                default: colors.background
             }
         }
     });
