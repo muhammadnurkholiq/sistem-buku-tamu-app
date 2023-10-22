@@ -7,6 +7,9 @@ import StaffGuard from '@/utils/route-guard/StaffGuard';
 import MainLayout from '@/layout/MainLayout';
 import Loadable from '@/ui-component/Loadable';
 
+// shared routing
+const SharedGuestBook = Loadable(lazy(() => import('@/views/main/shared/guestBook')));
+
 // admin routing
 const AdminDashboard = Loadable(lazy(() => import('@/views/main/admin/dashboard')));
 const AdminUserManagement = Loadable(lazy(() => import('@/views/main/admin/userManagement')));
@@ -33,6 +36,10 @@ export const AdminRoutes = {
         {
             path: 'user-management',
             element: <AdminUserManagement />
+        },
+        {
+            path: 'guest-book',
+            element: <SharedGuestBook />
         }
     ]
 };
@@ -51,6 +58,10 @@ export const StaffRoutes = {
         {
             path: 'dashboard',
             element: <StaffDashboard />
+        },
+        {
+            path: 'guest-book',
+            element: <SharedGuestBook />
         }
     ]
 };

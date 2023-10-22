@@ -10,8 +10,6 @@ import {
     Dialog,
     DialogContent,
     DialogTitle,
-    InputAdornment,
-    OutlinedInput,
     TableContainer,
     Table,
     TableBody,
@@ -19,14 +17,15 @@ import {
     TablePagination,
     TableCell,
     IconButton,
-    Select,
     MenuItem,
-    CircularProgress
+    CircularProgress,
+    OutlinedInput,
+    InputAdornment
 } from '@mui/material';
 
 // api
 import { useDispatch, useSelector } from '@/store';
-import { getUsers, deleteUser } from '@/store/slices/user';
+import { getGuestBook, deleteGuestBook } from '@/store/slices/guestBook';
 import { getSummaryGlobal } from '@/store/slices/summary';
 
 // project imports
@@ -34,18 +33,20 @@ import SummaryCard from '@/ui-component/cards/SummaryCard';
 import MainCard from '@/ui-component/cards/MainCard';
 import EnhancedTableHead from '@/ui-component/extended/EnhancedTableHead';
 import { getComparator, stableSort, handleSearch, handleRequestSort } from '@/utils/tableHelper';
-import Chip from '@/ui-component/extended/Chip';
 import EnhancedMenu from '@/ui-component/extended/EnhancedMenu';
 import AlertDialog from '@/ui-component/extended/AlertDialog';
-import AddUser from './forms/AddUser';
-import EditUser from './forms/EditUser';
-import ChangePassword from './forms/ChangePassword';
+import AddGuestBook from './forms/AddGuestBook';
+import EditGuestBook from './forms/EditGuestBook';
+import DetailGuestBook from './DetailGuestBook';
 
 // assets
-import IcTotalUser from '@/assets/images/component/ic_total_user.svg';
-import IcTotalAdmin from '@/assets/images/component/ic_total_admin.svg';
-import IcTotalStaff from '@/assets/images/component/ic_total_staff.svg';
-import { IconUserPlus, IconSearch, IconTrash, IconDots, IconUserEdit, IconKey } from '@tabler/icons-react';
+import IcTotalVisit from '@/assets/images/component/ic_total_visit.svg';
+import { IconBrowserPlus, IconTrash, IconDots, IconEdit, IconEye, IconSearch } from '@tabler/icons-react';
+
+// third-party
+import moment from 'moment';
+import 'moment/dist/locale/id';
+moment.locale('id');
 
 // Table Header
 const headCells = [
@@ -57,6 +58,13 @@ const headCells = [
         flex: 2
     },
     {
+        id: 'instance',
+        numeric: false,
+        label: 'Instansi',
+        align: 'center',
+        sortable: false
+    },
+    {
         id: 'full_name',
         numeric: false,
         label: 'Nama',
@@ -65,25 +73,12 @@ const headCells = [
         flex: 1
     },
     {
-        id: 'email',
+        id: 'created',
         numeric: false,
-        label: 'Email',
+        label: 'Waktu Kunjungan',
         align: 'center',
-        sortable: false
-    },
-    {
-        id: 'role',
-        numeric: false,
-        label: 'Peran',
-        align: 'center',
-        sortable: false
-    },
-    {
-        id: 'status',
-        numeric: false,
-        label: 'Status',
-        align: 'center',
-        sortable: false
+        sortable: false,
+        flex: 1
     },
     {
         id: 'action',
@@ -94,17 +89,14 @@ const headCells = [
     }
 ];
 
-const userManagement = () => {
+const guestBook = () => {
     const theme = useTheme();
     const dispatch = useDispatch();
-
-    const [search, setSearch] = useState('');
-    const [category, setCategory] = useState('semua');
 
     // action dialog
     const [openAdd, setOpenAdd] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
-    const [openChangePassword, setOpenChangePassword] = useState(false);
+    const [openDetail, setOpenDetail] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
     // table
@@ -114,29 +106,17 @@ const userManagement = () => {
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [rows, setRows] = useState([]);
 
-    const { users, loadingUser, errorDelete, loadingDelete } = useSelector((state) => state.user);
+    const { guestBooks, loadingGet, errorDelete, loadingDelete } = useSelector((state) => state.guestBook);
     const { loadingGetGlobal, summaryGlobal } = useSelector((state) => state.summary);
 
     useEffect(() => {
         dispatch(getSummaryGlobal());
+        dispatch(getGuestBook());
     }, [dispatch]);
 
     useEffect(() => {
-        if (category === 'semua') {
-            dispatch(getUsers());
-        } else {
-            dispatch(getUsers(`?role=${category}`));
-        }
-    }, [dispatch, category]);
-
-    useEffect(() => {
-        setRows(users);
-    }, [users]);
-
-    useEffect(() => {
-        handleSearch(search, setPage, ['id', 'full_name', 'email'], rows, setRows, users);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [search]);
+        setRows(guestBooks);
+    }, [guestBooks]);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -147,22 +127,29 @@ const userManagement = () => {
         setPage(0);
     };
 
+    // search state
+    const [search, setSearch] = useState('');
+    useEffect(() => {
+        handleSearch(search, setPage, ['id', 'instance', 'full_name', 'email', 'phone'], rows, setRows, guestBooks);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [search]);
+
     // Action  button
     const [anchorEl2, setAnchorEl2] = useState(null);
     const openAction = Boolean(anchorEl2);
-    const [selectedUser, setSelectedUser] = useState([]);
+    const [selectedData, setSelectedData] = useState([]);
     const handleClickAction = (event, row) => {
         setAnchorEl2(event.currentTarget);
-        setSelectedUser(row);
+        setSelectedData(row);
     };
     const handleCloseAction = () => {
         setAnchorEl2(null);
-        setSelectedUser([]);
+        setSelectedData([]);
     };
 
     useEffect(() => {
         if (!errorDelete && !loadingDelete) {
-            dispatch(getUsers());
+            dispatch(getGuestBook());
             setOpenDeleteDialog(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -175,13 +162,11 @@ const userManagement = () => {
                 <Grid item xs={12}>
                     <Stack direction={{ md: 'row' }} alignItems="center" justifyContent="space-between" gap={2}>
                         <SummaryCard
-                            title="Total Pengguna"
-                            value={summaryGlobal?.total_user}
-                            icon={IcTotalUser}
+                            title="Total Kunjungan"
+                            value={summaryGlobal?.total_guest_book}
+                            icon={IcTotalVisit}
                             loading={loadingGetGlobal}
                         />
-                        <SummaryCard title="Admin" value={summaryGlobal?.total_user_admin} icon={IcTotalAdmin} loading={loadingGetGlobal} />
-                        <SummaryCard title="Staff" value={summaryGlobal?.total_user_staff} icon={IcTotalStaff} loading={loadingGetGlobal} />
                     </Stack>
                 </Grid>
 
@@ -190,7 +175,7 @@ const userManagement = () => {
                     <MainCard>
                         <Stack gap={2}>
                             <Stack direction="row" justifyContent="space-between">
-                                <Typography variant="h2">Manajemen Pengguna</Typography>
+                                <Typography variant="h2">Buku Tamu</Typography>
                                 <OutlinedInput
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
@@ -209,26 +194,14 @@ const userManagement = () => {
                                         </InputAdornment>
                                     }
                                 />
-                                <Select
-                                    size="small"
-                                    sx={{ width: '15%' }}
-                                    labelId="filter"
-                                    id="filter"
-                                    value={category}
-                                    onChange={(event) => setCategory(event.target.value)}
-                                >
-                                    <MenuItem value={'semua'}>Semua</MenuItem>
-                                    <MenuItem value="01">Admin</MenuItem>
-                                    <MenuItem value="02">Staff</MenuItem>
-                                </Select>
                                 <Button
                                     size="medium"
                                     variant="contained"
-                                    endIcon={<IconUserPlus />}
+                                    endIcon={<IconBrowserPlus />}
                                     sx={{ width: 'fit-content', px: 3 }}
                                     onClick={() => setOpenAdd(true)}
                                 >
-                                    Tambah Pengguna
+                                    Tambah Kunjungan
                                 </Button>
                             </Stack>
 
@@ -246,7 +219,7 @@ const userManagement = () => {
                                     />
 
                                     <TableBody>
-                                        {!loadingUser &&
+                                        {!loadingGet &&
                                             stableSort(rows, getComparator(order, orderBy))
                                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                                 .map((row, index) => {
@@ -258,30 +231,10 @@ const userManagement = () => {
                                                             <TableCell align="center" component="th" scope="row">
                                                                 <>{page * rowsPerPage + index + 1}.</>
                                                             </TableCell>
-                                                            <TableCell>
-                                                                <Stack alignItems="center" gap={1}>
-                                                                    <Typography variant="h6">{row?.full_name}</Typography>
-                                                                    <Typography variant="caption">{row.id_employee}</Typography>
-                                                                </Stack>
-                                                            </TableCell>
-                                                            <TableCell align="center">{row?.email}</TableCell>
-                                                            <TableCell align="center">{row?.role === '01' ? 'Admin' : 'Staff'}</TableCell>
+                                                            <TableCell align="center">{row?.instance}</TableCell>
+                                                            <TableCell align="center">{row?.full_name}</TableCell>
                                                             <TableCell align="center">
-                                                                {row.status === '01' ? (
-                                                                    <Chip
-                                                                        label="Aktif"
-                                                                        chipcolor="success"
-                                                                        size="small"
-                                                                        variant="outlined"
-                                                                    />
-                                                                ) : (
-                                                                    <Chip
-                                                                        label="Non-Aktif"
-                                                                        chipcolor="error"
-                                                                        size="small"
-                                                                        variant="outlined"
-                                                                    />
-                                                                )}
+                                                                Jam {moment(row?.created).format('hh:ss A, DD MMMM YYYY')}
                                                             </TableCell>
                                                             <TableCell align="center">
                                                                 <IconButton
@@ -307,32 +260,30 @@ const userManagement = () => {
                                                                     <MenuItem
                                                                         onClick={() => {
                                                                             setAnchorEl2(null);
-                                                                            setOpenEdit(true);
+                                                                            setOpenDetail(true);
                                                                         }}
                                                                         disableRipple
-                                                                        disabled={selectedUser?.email === 'admin@gmail.com'}
                                                                     >
-                                                                        <IconUserEdit
+                                                                        <IconEye
                                                                             color={theme.palette.info.main}
                                                                             stroke={1.5}
                                                                             style={{ marginRight: 5 }}
                                                                         />
-                                                                        Ubah User
+                                                                        Lihat Data Kunjungan
                                                                     </MenuItem>
                                                                     <MenuItem
                                                                         onClick={() => {
                                                                             setAnchorEl2(null);
-                                                                            setOpenChangePassword(true);
+                                                                            setOpenEdit(true);
                                                                         }}
                                                                         disableRipple
-                                                                        disabled={selectedUser?.email === 'admin@gmail.com'}
                                                                     >
-                                                                        <IconKey
+                                                                        <IconEdit
                                                                             color={theme.palette.info.main}
                                                                             stroke={1.5}
                                                                             style={{ marginRight: 5 }}
                                                                         />
-                                                                        Ganti Password
+                                                                        Ubah Data Kunjungan
                                                                     </MenuItem>
                                                                     <MenuItem
                                                                         onClick={() => {
@@ -340,21 +291,20 @@ const userManagement = () => {
                                                                             setOpenDeleteDialog(true);
                                                                         }}
                                                                         disableRipple
-                                                                        disabled={selectedUser?.email === 'admin@gmail.com'}
                                                                     >
                                                                         <IconTrash
                                                                             color={theme.palette.error.main}
                                                                             stroke={1.5}
                                                                             style={{ marginRight: 5 }}
                                                                         />
-                                                                        Hapus User
+                                                                        Hapus Data Kunjungan
                                                                     </MenuItem>
                                                                 </EnhancedMenu>
                                                             </TableCell>
                                                         </TableRow>
                                                     );
                                                 })}
-                                        {loadingUser ? (
+                                        {loadingGet ? (
                                             <TableRow>
                                                 <TableCell colSpan={6} align="center">
                                                     <CircularProgress />
@@ -362,7 +312,7 @@ const userManagement = () => {
                                             </TableRow>
                                         ) : (
                                             rows.length === 0 &&
-                                            !loadingUser && (
+                                            !loadingGet && (
                                                 <TableRow>
                                                     <TableCell colSpan={6} align="center">
                                                         <Typography variant="subtitle2">Tidak ada data tersedia</Typography>
@@ -391,9 +341,9 @@ const userManagement = () => {
             {/* dialog */}
             {/* add */}
             <Dialog open={openAdd} fullWidth maxWidth="md" aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
-                <DialogTitle id="alert-dialog-title">Tambah Pengguna</DialogTitle>
+                <DialogTitle id="alert-dialog-title">Tambah Data Kunjungan</DialogTitle>
                 <DialogContent>
-                    <AddUser onClose={() => setOpenAdd(false)} />
+                    <AddGuestBook onClose={() => setOpenAdd(false)} />
                 </DialogContent>
             </Dialog>
 
@@ -405,33 +355,33 @@ const userManagement = () => {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">Ubah Pengguna</DialogTitle>
+                <DialogTitle id="alert-dialog-title">Ubah Data Kunjungan</DialogTitle>
                 <DialogContent>
-                    <EditUser
-                        data={selectedUser}
+                    <EditGuestBook
+                        data={selectedData}
                         onClose={() => {
                             setOpenEdit(false);
-                            setSelectedUser([]);
+                            setSelectedData([]);
                         }}
                     />
                 </DialogContent>
             </Dialog>
 
-            {/* change Password */}
+            {/* detail */}
             <Dialog
-                open={openChangePassword}
+                open={openDetail}
                 fullWidth
                 maxWidth="md"
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">Ubah Password Pengguna</DialogTitle>
+                <DialogTitle id="alert-dialog-title">Detail Data Kunjungan</DialogTitle>
                 <DialogContent>
-                    <ChangePassword
-                        data={selectedUser}
+                    <DetailGuestBook
+                        data={selectedData}
                         onClose={() => {
-                            setOpenChangePassword(false);
-                            setSelectedUser([]);
+                            setOpenDetail(false);
+                            setSelectedData([]);
                         }}
                     />
                 </DialogContent>
@@ -443,7 +393,7 @@ const userManagement = () => {
                     open={openDeleteDialog}
                     onClose={() => setOpenDeleteDialog(false)}
                     onConfirm={async () => {
-                        await dispatch(deleteUser(selectedUser?.id));
+                        await dispatch(deleteGuestBook(selectedData?.id));
                         await dispatch(getSummaryGlobal());
                     }}
                 >
@@ -454,4 +404,4 @@ const userManagement = () => {
     );
 };
 
-export default userManagement;
+export default guestBook;
