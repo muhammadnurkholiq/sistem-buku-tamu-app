@@ -68,7 +68,7 @@ export function getSummaryGlobal(param) {
             dispatch(slice.actions.loading(true));
             dispatch(slice.actions.loadingGetGlobal(true));
             const response = await axios.get(`/summary${param || ''}`);
-            dispatch(slice.actions.getSummaryGlobalSuccess(response.data.data));
+            dispatch(slice.actions.getSummaryGlobalSuccess(response?.data?.data));
             dispatch(slice.actions.loading(false));
             dispatch(slice.actions.loadingGetGlobal(false));
         } catch (error) {

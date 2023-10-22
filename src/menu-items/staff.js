@@ -1,27 +1,10 @@
 // assets
-import {
-    IconBuildingWarehouse,
-    IconCategory,
-    IconClipboardData,
-    IconDashboard,
-    IconReceiptRefund,
-    IconShoppingCartPlus,
-    IconShoppingCartX,
-    IconUserCog,
-    IconColorFilter
-} from '@tabler/icons-react';
+import { IconBook2, IconDashboard } from '@tabler/icons-react';
 
 // constant
 const icons = {
-    IconBuildingWarehouse,
-    IconCategory,
-    IconClipboardData,
-    IconDashboard,
-    IconReceiptRefund,
-    IconShoppingCartPlus,
-    IconShoppingCartX,
-    IconUserCog,
-    IconColorFilter
+    IconBook2,
+    IconDashboard
 };
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
@@ -39,6 +22,16 @@ const staff = {
             type: 'item',
             url: '/staff/dashboard',
             icon: icons.IconDashboard,
+            breadcrumbs: false,
+            external: false,
+            target: false
+        },
+        {
+            id: 'guest-book',
+            title: 'Buku Tamu',
+            type: 'item',
+            url: '/staff/guest-book',
+            icon: icons.IconBook2,
             breadcrumbs: false,
             external: false,
             target: false
