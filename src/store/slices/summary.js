@@ -9,13 +9,13 @@ import axios from '@/utils/axios';
 const initialState = {
     loading: false,
     loadingGetGlobal: false,
-    loadingReportTask: false,
+    loadingGuestBook: false,
     error: null,
     errorCreate: null,
     errorUpdate: null,
     errorDelete: null,
     summaryGlobal: [],
-    reportTask: []
+    chartGuestBook: []
 };
 
 const slice = createSlice({
@@ -40,8 +40,8 @@ const slice = createSlice({
         getSummaryGlobalSuccess(state, action) {
             state.summaryGlobal = action.payload;
         },
-        getSummaryReportTaskSuccess(state, action) {
-            state.reportTask = action.payload;
+        getSummaryChartGuestBookSuccess(state, action) {
+            state.chartGuestBook = action.payload;
         },
 
         // loading
@@ -51,8 +51,8 @@ const slice = createSlice({
         loadingGetGlobal(state, action) {
             state.loadingGetGlobal = action.payload;
         },
-        loadingReportTask(state, action) {
-            state.loadingReportTask = action.payload;
+        loadingGuestBook(state, action) {
+            state.loadingGuestBook = action.payload;
         }
     }
 });
@@ -74,6 +74,23 @@ export function getSummaryGlobal(param) {
         } catch (error) {
             dispatch(slice.actions.loading(false));
             dispatch(slice.actions.loadingGetGlobal(false));
+            dispatch(slice.actions.hasError(error));
+        }
+    };
+}
+
+export function getChartGuestBook(param) {
+    return async () => {
+        try {
+            dispatch(slice.actions.loading(true));
+            dispatch(slice.actions.loadingGuestBook(true));
+            const response = await axios.get(`/summary/chart-guest-book${param || ''}`);
+            dispatch(slice.actions.getSummaryChartGuestBookSuccess(response?.data?.data));
+            dispatch(slice.actions.loading(false));
+            dispatch(slice.actions.loadingGuestBook(false));
+        } catch (error) {
+            dispatch(slice.actions.loading(false));
+            dispatch(slice.actions.loadingGuestBook(false));
             dispatch(slice.actions.hasError(error));
         }
     };
