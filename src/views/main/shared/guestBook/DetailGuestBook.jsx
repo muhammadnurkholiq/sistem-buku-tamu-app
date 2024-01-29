@@ -21,7 +21,7 @@ const DetailGuestBook = ({ data, onClose }) => {
         setRow([
             {
                 id: 'full_name',
-                title: 'Nama Lenkap',
+                title: 'Nama Lengkap',
                 value: data?.full_name || '-'
             },
             {

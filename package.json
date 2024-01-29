@@ -20,7 +20,7 @@
         "@mui/system": "^5.14.13",
         "@mui/utils": "^5.14.13",
         "@mui/x-data-grid": "^6.16.2",
-        "@mui/x-date-pickers": "^6.16.2",
+        "@mui/x-date-pickers": "^6.19.2",
         "@reduxjs/toolkit": "^1.9.7",
         "@tabler/icons-react": "^2.39.0",
         "apexcharts": "^3.43.0",

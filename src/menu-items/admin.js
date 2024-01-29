@@ -1,11 +1,12 @@
 // assets
-import { IconBook2, IconDashboard, IconUserCog } from '@tabler/icons-react';
+import { IconBook2, IconDashboard, IconUserCog, IconReport } from '@tabler/icons-react';
 
 // constant
 const icons = {
     IconBook2,
     IconDashboard,
-    IconUserCog
+    IconUserCog,
+    IconReport
 };
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
@@ -43,6 +44,16 @@ const admin = {
             type: 'item',
             url: '/admin/guest-book',
             icon: icons.IconBook2,
+            breadcrumbs: false,
+            external: false,
+            target: false
+        },
+        {
+            id: 'report',
+            title: 'Laporan',
+            type: 'item',
+            url: '/admin/report',
+            icon: icons.IconReport,
             breadcrumbs: false,
             external: false,
             target: false

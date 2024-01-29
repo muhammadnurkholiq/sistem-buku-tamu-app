@@ -13,6 +13,7 @@ const SharedGuestBook = Loadable(lazy(() => import('@/views/main/shared/guestBoo
 // admin routing
 const AdminDashboard = Loadable(lazy(() => import('@/views/main/admin/dashboard')));
 const AdminUserManagement = Loadable(lazy(() => import('@/views/main/admin/userManagement')));
+const AdminReport = Loadable(lazy(() => import('@/views/main/admin/report')));
 
 // staff routing
 const StaffDashboard = Loadable(lazy(() => import('@/views/main/staff/dashboard')));
@@ -40,6 +41,10 @@ export const AdminRoutes = {
         {
             path: 'guest-book',
             element: <SharedGuestBook />
+        },
+        {
+            path: 'report',
+            element: <AdminReport />
         }
     ]
 };
