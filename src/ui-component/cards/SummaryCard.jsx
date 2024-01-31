@@ -19,7 +19,7 @@ const SummaryCard = ({ title, value, loading, icon }) => {
                         <CircularProgress sx={{ color: theme.palette.secondary.main }} />
                     ) : (
                         <Typography variant="h1" sx={{ color: theme.palette.secondary.main }}>
-                            {value}
+                            {value || 0}
                         </Typography>
                     )}
                 </Stack>
