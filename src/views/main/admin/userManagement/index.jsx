@@ -447,7 +447,7 @@ const userManagement = () => {
                         await dispatch(getSummaryGlobal());
                     }}
                 >
-                    <Typography>Anda yakin ingin menghapus persediaan ini?</Typography>
+                    <Typography>Anda yakin ingin menghapus data ini?</Typography>
                 </AlertDialog>
             )}
         </>
